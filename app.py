@@ -6,7 +6,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Define the base directory for models
-base_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.environ.get('RENDER_PROJECT_ROOT', os.path.dirname(os.path.abspath(__file__)))
 models_dir = os.path.join(base_dir, 'models')
 
 model_paths = {
@@ -19,8 +19,11 @@ model_paths = {
 
 models = {}
 for model_name, model_path in model_paths.items():
-    with open(model_path, 'rb') as file:
-        models[model_name] = pickle.load(file)
+    try:
+        with open(model_path, 'rb') as file:
+            models[model_name] = pickle.load(file)
+    except FileNotFoundError:
+        print(f"Warning: Model file not found: {model_path}")
 
 @app.route('/')
 def index():
@@ -36,6 +39,9 @@ def predict_aqi():
     so2 = float(request.form['so2'])
     co = float(request.form['co'])
     ozone = float(request.form['ozone'])
+
+    if model_name not in models:
+        return "Error: Model not found", 400
 
     model = models[model_name]
     input_data = np.array([[pm25, pm10, no2, nh3, so2, co, ozone]])
