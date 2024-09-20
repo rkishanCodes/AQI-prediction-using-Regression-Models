@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>AQI Prediction</h1>
+    <div class="container">
+         <form action="{{ url_for('predict_aqi') }}" method="post">
+            <label for="model">Select Model:</label>
+            <select id="model" name="model">
+                <option value="Decision Tree">Decision Tree</option>
+                <option value="Random Forest">Random Forest</option>
+                <option value="KNN">KNN</option>
+                <option value="Linear Regression">Linear Regression</option>
+                <option value="Gradient Boost">Gradient Boost</option>
+            </select><br>
+            <label for="pm25">PM2.5:</label>
+            <input type="number" id="pm25" name="pm25" required><br><br>
+
+            <label for="pm10">PM10:</label>
+            <input type="number" id="pm10" name="pm10" required><br><br>
+
+            <label for="no2">NO2:</label>
+            <input type="number" id="no2" name="no2" required><br><br>
+
+            <label for="nh3">NH3:</label>
+            <input type="number" id="nh3" name="nh3" required><br><br>
+
+            <label for="so2">SO2:</label>
+            <input type="number" id="so2" name="so2" required><br><br>
+
+            <label for="co">CO:</label>
+            <input type="number" id="co" name="co" required><br><br>
+
+            <label for="ozone">OZONE:</label>
+            <input type="number" id="ozone" name="ozone" required><br><br>
+
+            <button type="submit">Predict AQI</button>
+        </form>
+    </div>
+    <script>
+        const pm25=document.getElementById("pm25")
+
+        pm25.addEventListener("input",()=>{
+            const pm25Value=parseInt(pm25.value)
+            // console.log(pm25Value);
+
+            if(pm25Value>500){
+                console.log("nope");
+                alert(`Please enter value Below than 600`)
+            }
+        })
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI Prediction Result</title>
+    <style>
+        p {
+            text-align: center;
+        }
+
+        #aqi_mini {
+            outline: 2px solid lime;
+            display: block;
+            min-width: 600px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .good {
+            color: green;
+        }
+
+        .moderate {
+            color: yellow;
+        }
+
+        .unhealthy-sensitive {
+            color: orange;
+        }
+
+        .unhealthy {
+            color: red;
+        }
+
+        .very-unhealthy {
+            color: purple;
+        }
+
+        .hazardous {
+            color: brown;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: auto;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .bento-grid img {
+            width: 100%;
+            min-height: 550px;
+            outline: 2px solid black;
+            margin: 20px;
+
+
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .back {
+            width: 2.5rem;
+            height: 2.5rem;
+            position: absolute;
+            margin-left: 5%;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <button class="back" onclick="goBack()">
+        <img src="{{ url_for('static', filename='images/back-arrow-icon.svg') }}" alt="Example Image">
+    </button>
+    <img id="aqi_mini" src="{{ url_for('static', filename='images/aqi_mini.jpg') }}" alt="Example Image">
+    <h1>AQI Prediction Result</h1>
+    <p>
+        AQI VALUE PREDICTED: {{ predicted_aqi }}<br>
+        AQI CONDITION:
+        {% if predicted_aqi < 50 %} <span class="good">Good</span>
+            {% elif predicted_aqi < 100 %} <span class="moderate">Moderate</span>
+                {% elif predicted_aqi < 150 %} <span class="unhealthy-sensitive">Unhealthy for Sensitive Groups</span>
+                    {% elif predicted_aqi < 200 %} <span class="unhealthy">Unhealthy</span>
+                        {% elif predicted_aqi < 300 %} <span class="very-unhealthy">Very Unhealthy</span>
+                            {% elif predicted_aqi < 500 %} <span class="hazardous">Hazardous</span>
+                                {% else %}
+                                <span class="hazardous">Very Hazardous</span>
+                                {% endif %}
+    </p>
+    <div class="bento-grid">
+        <img id="graph_image" src="{{ url_for('static', filename='images/top_5_states_average_aqi.jpg') }}"
+            alt="Graph Image">
+        <img id="correlation_heatmap" src="{{ url_for('static', filename='images/correlation_heatmap.png') }}"
+            alt="Correlation Heatmap">
+        <img id="aqi_values_by_state" class="full-width"
+            src="{{ url_for('static', filename='images/aqi_values_by_state.png') }}" alt="AQI Values by State">
+        <img id="top_5_states_aqi" src="{{ url_for('static', filename='images/top_5_states_aqi.png') }}"
+            alt="Top 5 States AQI">
+        <img id="top_5_states_pm10" src="{{ url_for('static', filename='images/top_5_states_pm10.png') }}"
+            alt="Top 5 States PM10">
+    </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+
+</html>
