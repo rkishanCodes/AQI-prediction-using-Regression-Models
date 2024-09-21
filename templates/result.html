@@ -5,114 +5,202 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQI Prediction Result</title>
-    <style>
-        p {
-            text-align: center;
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" /> -->
+
+
+</head>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Roboto Mono", monospace;
+        font-optical-sizing: auto;
+        font-style: normal;
+        color: #1a252a;
+    }
+
+    body {
+        background-color: #bdfa65;
+        padding: 2vw;
+        position: relative;
+
+    }
+
+    .result_section {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        max-width: 100vw;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+    .result {
+        text-align: center;
+    }
+
+    .predicted {
+        text-align: center;
+
+    }
+
+    .back {
+        position: relative;
+        top: 5%;
+        left: 5%;
+        border: none;
+        cursor: pointer;
+      
+    }
+
+    .back img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .good {
+        color: green;
+    }
+
+    .moderate {
+        color: yellow;
+    }
+
+    .unhealthy-sensitive {
+        color: orange;
+    }
+
+    .unhealthy {
+        color: red;
+    }
+
+    .very-unhealthy {
+        color: purple;
+    }
+
+    .hazardous {
+        color: brown;
+    }
+
+
+
+    @media screen and (min-width: 768px) {
+
+        .result {
+            font-size: 2.5vw;
         }
 
-        #aqi_mini {
-            outline: 2px solid lime;
-            display: block;
-            min-width: 600px;
-            text-align: center;
-            margin-top: 20px;
+        .predicted {
+            font-size: 2vw;
         }
 
-        .good {
-            color: green;
-        }
+        .aqi_param {
 
-        .moderate {
-            color: yellow;
-        }
+            width: 50%;
+            height: 50%;
 
-        .unhealthy-sensitive {
-            color: orange;
-        }
-
-        .unhealthy {
-            color: red;
-        }
-
-        .very-unhealthy {
-            color: purple;
-        }
-
-        .hazardous {
-            color: brown;
-        }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: auto;
-            gap: 10px;
-            padding: 10px;
-        }
-
-        .bento-grid img {
-            width: 100%;
-            min-height: 550px;
-            outline: 2px solid black;
-            margin: 20px;
-
-
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        .full-width {
-            grid-column: span 2;
         }
 
         .back {
-            width: 2.5rem;
-            height: 2.5rem;
-            position: absolute;
-            margin-left: 5%;
+            width: 80px;
+            height: 80px;
+
         }
-    </style>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+    }
+
+    @media screen and (max-width: 768px) {
+
+        .result {
+            font-size: 3.5vw;
+        }
+
+        .predicted {
+            font-size: 3vw;
+        }
+
+        .aqi_param {
+
+            width: 70%;
+            height: 70%;
+
+        }
+
+        .back {
+            width: 30px;
+            height: 30px;
+
+        }
+    }
+
+    @media screen and (max-width: 468px) {
+
+        .result {
+            font-size: 4.5vw;
+        }
+
+        .predicted {
+            font-size: 4vw;
+        }
+
+        .aqi_param {
+
+            width: 80%;
+            height: 80%;
+
+        }
+
+        .back {
+            width: 25px;
+            height: 25px;
+
+        }
+    }
+</style>
 
 <body>
-    <button class="back" onclick="goBack()">
-        <img src="{{ url_for('static', filename='images/back-arrow-icon.svg') }}" alt="Example Image">
-    </button>
-    <img id="aqi_mini" src="{{ url_for('static', filename='images/aqi_mini.jpg') }}" alt="Example Image">
-    <h1>AQI Prediction Result</h1>
-    <p>
-        AQI VALUE PREDICTED: {{ predicted_aqi }}<br>
-        AQI CONDITION:
-        {% if predicted_aqi < 50 %} <span class="good">Good</span>
-            {% elif predicted_aqi < 100 %} <span class="moderate">Moderate</span>
-                {% elif predicted_aqi < 150 %} <span class="unhealthy-sensitive">Unhealthy for Sensitive Groups</span>
-                    {% elif predicted_aqi < 200 %} <span class="unhealthy">Unhealthy</span>
-                        {% elif predicted_aqi < 300 %} <span class="very-unhealthy">Very Unhealthy</span>
-                            {% elif predicted_aqi < 500 %} <span class="hazardous">Hazardous</span>
-                                {% else %}
-                                <span class="hazardous">Very Hazardous</span>
-                                {% endif %}
-    </p>
-    <div class="bento-grid">
-        <img id="graph_image" src="{{ url_for('static', filename='images/top_5_states_average_aqi.jpg') }}"
-            alt="Graph Image">
-        <img id="correlation_heatmap" src="{{ url_for('static', filename='images/correlation_heatmap.png') }}"
-            alt="Correlation Heatmap">
-        <img id="aqi_values_by_state" class="full-width"
-            src="{{ url_for('static', filename='images/aqi_values_by_state.png') }}" alt="AQI Values by State">
-        <img id="top_5_states_aqi" src="{{ url_for('static', filename='images/top_5_states_aqi.png') }}"
-            alt="Top 5 States AQI">
-        <img id="top_5_states_pm10" src="{{ url_for('static', filename='images/top_5_states_pm10.png') }}"
-            alt="Top 5 States PM10">
+    <div class="back">
+        <img src="{{ url_for('static', filename='images/back-arrow-icon.svg') }}" alt="back">
     </div>
+    <div class="result_section">
+        <img class="aqi_param" src="{{ url_for('static', filename='images/aqi.png') }}" alt="aqi">
+        <div class="prediction_container">
+            <h1 class="result">AQI Prediction Result</h1>
+            <p class="predicted">
+                AQI VALUE PREDICTED: {{ predicted_aqi }}<br>
+                AQI CONDITION:
+                {% if predicted_aqi < 50 %} <span class="good">Good</span>
+                    {% elif predicted_aqi < 100 %} <span class="moderate">Moderate</span>
+                        {% elif predicted_aqi < 150 %} <span class="unhealthy-sensitive">Unhealthy for Sensitive
+                            Groups</span>
+                            {% elif predicted_aqi < 200 %} <span class="unhealthy">Unhealthy</span>
+                                {% elif predicted_aqi < 300 %} <span class="very-unhealthy">Very Unhealthy</span>
+                                    {% elif predicted_aqi < 500 %} <span class="hazardous">Hazardous</span>
+                                        {% else %}
+                                        <span class="hazardous">Very Hazardous</span>
+                                        {% endif %}
+            </p>
+        </div>
+    </div>
+
     <script>
-        function goBack() {
+
+        const button = document.querySelector(".back")
+        button.addEventListener("click", () => {
             window.history.back();
-        }
+
+        })
+
+
+
+
+
     </script>
 </body>
 
-</html>
+</html>_

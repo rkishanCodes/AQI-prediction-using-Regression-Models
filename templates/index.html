@@ -2,219 +2,64 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>AQI Prediction</title>
 </head>
 
 <body>
-    <style>
-        /* Reset default margin, padding, and border */
-        * {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            box-sizing: border-box;
-        }
-
-        /* Center the paragraph tag */
-        p {
-            text-align: center;
-            font-size: 1.5em;
-            /* Increase font size */
-            margin-top: 20px;
-            /* Add some space above the paragraph */
-            padding: 10px;
-            /* Add padding to the paragraph */
-            background-color: #f0f0f0;
-            /* Light gray background */
-            border-radius: 8px;
-            /* Rounded corners */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* Shadow effect */
-            color: #333;
-            /* Dark text color */
-        }
 
 
-        /* Set base font size and family */
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            background-color: #f0f0f0;
-            /* Light gray background */
-            color: #333;
-            /* Dark text color */
-        }
-
-        /* Center align container */
-        .container {
-            width: 80%;
-            max-width: 800px;
-            /* Limit container width */
-            margin: 50px auto;
-            background-color: #fff;
-            /* White background */
-            padding: 40px;
-            border-radius: 10px;
-            /* Rounded corners */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-            /* Shadow effect */
-        }
-
-        /* Header styles */
-        h1 {
-            font-size: 2.5em;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-            /* Dark text color */
-        }
-
-        /* Form styles */
-        form {
-            margin-top: 30px;
-        }
-
-        /* Label styles */
-        label {
-            display: block;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            color: #666;
-            /* Medium gray text color */
-        }
-
-        /* Input styles */
-        input[type="number"],
-        select {
-            width: 100%;
-            height: 50px;
-            padding: 10px;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            border: 1px solid #ccc;
-            /* Light gray border */
-            border-radius: 5px;
-            /* Rounded corners */
-            transition: border-color 0.3s ease;
-            /* Smooth transition */
-        }
-
-        /* Input focus styles */
-        input[type="number"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #6c63ff;
-            /* Custom focus color */
-        }
-
-        /* Button styles */
-        button[type="submit"] {
-            width: 100%;
-            height: 50px;
-            font-size: 1.2em;
-            color: #fff;
-            /* White text color */
-            background-color: #6c63ff;
-            /* Purple background color */
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            /* Smooth transition */
-        }
-
-        /* Button hover styles */
-        button[type="submit"]:hover {
-            background-color: #5247d4;
-            /* Darker purple on hover */
-        }
-
-        /* Center the paragraph tag */
-        p {
-            text-align: center;
-        }
-
-        /* Style for the image */
-        img {
-            display: block;
-            /* Ensure images are displayed as blocks */
-            margin: 0 auto;
-            /* Center the images horizontally */
-        }
-
-        /* Style for the AQI mini image */
-        #aqi_mini {
-            max-width: 200px;
-            /* Set maximum width for the image */
-            height: auto;
-            /* Maintain aspect ratio */
-        }
-
-        /* Style for the graph image */
-        #graph_image {
-            display: block;
-            /* Ensure the image is displayed as a block */
-            margin: 20px auto;
-            /* Center the image horizontally and add space */
-            max-width: 100%;
-            /* Set maximum width to fill the container */
-            height: auto;
-            /* Maintain aspect ratio */
-        }
-    </style>
-    <h1>AQI Prediction</h1>
+    <h1 class="heading">AQI Prediction</h1>
     <div class="container">
         <form action="{{ url_for('predict_aqi') }}" method="post">
-            <label for="model">Select Model:</label>
-            <select id="model" name="model">
-                <option value="Decision Tree">Decision Tree</option>
-                <option value="Random Forest">Random Forest</option>
-                <option value="KNN">KNN</option>
-                <option value="Linear Regression">Linear Regression</option>
-                <option value="Gradient Boost">Gradient Boost</option>
-            </select><br>
-            <label for="pm25">PM2.5:</label>
-            <input type="number" id="pm25" name="pm25" required><br><br>
+            <div class="box">
+                <label for="model">Select Model:</label>
+                <select id="model" name="model">
+                    <option value="Decision Tree">Decision Tree</option>
+                    <option value="Random Forest">Random Forest</option>
+                    <option value="KNN">KNN</option>
+                    <option value="Linear Regression">Linear Regression</option>
+                    <option value="Gradient Boost">Gradient Boost</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label for="pm25">PM2.5:</label>
+                <input type="number" id="pm25" name="pm25" required />
 
-            <label for="pm10">PM10:</label>
-            <input type="number" id="pm10" name="pm10" required><br><br>
+                <label for="pm10">PM10:</label>
+                <input type="number" id="pm10" name="pm10" required />
 
-            <label for="no2">NO2:</label>
-            <input type="number" id="no2" name="no2" required><br><br>
+                <label for="no2">NO2:</label>
+                <input type="number" id="no2" name="no2" required />
 
-            <label for="nh3">NH3:</label>
-            <input type="number" id="nh3" name="nh3" required><br><br>
+                <label for="nh3">NH3:</label>
+                <input type="number" id="nh3" name="nh3" required />
 
-            <label for="so2">SO2:</label>
-            <input type="number" id="so2" name="so2" required><br><br>
+                <label for="so2">SO2:</label>
+                <input type="number" id="so2" name="so2" required />
 
-            <label for="co">CO:</label>
-            <input type="number" id="co" name="co" required><br><br>
+                <label for="co">CO:</label>
+                <input type="number" id="co" name="co" required />
 
-            <label for="ozone">OZONE:</label>
-            <input type="number" id="ozone" name="ozone" required><br><br>
+                <label for="ozone">OZONE:</label>
+                <input type="number" id="ozone" name="ozone" required />
+            </div>
 
-            <button type="submit">Predict AQI</button>
+            <div class="button"><button type="submit">Predict AQI</button></div>
         </form>
     </div>
     <script>
-        const pm25 = document.getElementById("pm25")
+        const pm25 = document.getElementById("pm25");
 
         pm25.addEventListener("input", () => {
-            const pm25Value = parseInt(pm25.value)
-            // console.log(pm25Value);
-
+            const pm25Value = parseInt(pm25.value);
             if (pm25Value > 500) {
                 console.log("nope");
-                alert(`Please enter value Below than 600`)
+                alert("Please enter value Below than 600");
             }
-        })
-
-
+        });
     </script>
 </body>
 

@@ -1,123 +1,228 @@
-/* Reset default margin, padding, and border */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-}
-/* Center the paragraph tag */
-p {
-    text-align: center;
-    font-size: 1.5em; /* Increase font size */
-    margin-top: 20px; /* Add some space above the paragraph */
-    padding: 10px; /* Add padding to the paragraph */
-    background-color: #f0f0f0; /* Light gray background */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
-    color: #333; /* Dark text color */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color: #1a252a;
 }
 
-
-/* Set base font size and family */
 body {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    background-color: #f0f0f0; /* Light gray background */
-    color: #333; /* Dark text color */
+  background-color: #bdfa65;
+  padding: 2vw;
+  position: relative;
 }
 
-/* Center align container */
-.container {
-    width: 80%;
-    max-width: 800px; /* Limit container width */
-    margin: 50px auto;
-    background-color: #fff; /* White background */
-    padding: 40px;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Shadow effect */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("../images/img.png");
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: top left;
+  transform: scaleX(-1);
+  z-index: -1;
+  min-height: 100vh;
 }
 
-/* Header styles */
 h1 {
-    font-size: 2.5em;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333; /* Dark text color */
+  font-size: 15vw;
+  text-transform: uppercase;
 }
-
-/* Form styles */
 form {
-    margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  margin-top: 5w;
 }
-
-/* Label styles */
+.box {
+  background-color: white;
+  width: 100%;
+  height: 20vw;
+  border-radius: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1vw;
+}
 label {
-    display: block;
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #666; /* Medium gray text color */
+  font-size: 4vw;
+  font-weight: bold;
 }
 
-/* Input styles */
-input[type="number"], select {
-    width: 100%;
-    height: 50px;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 1.1em;
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 5px; /* Rounded corners */
-    transition: border-color 0.3s ease; /* Smooth transition */
+.input-box {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 3vw;
+  border-radius: 2vw;
 }
 
-/* Input focus styles */
-input[type="number"]:focus, select:focus {
-    outline: none;
-    border-color: #6c63ff; /* Custom focus color */
+input {
+  padding: 1rem;
+  border-radius: 2vw;
+  border: 1px solid black;
+  font-size: 3vw;
+  font-weight: bold;
 }
 
-/* Button styles */
-button[type="submit"] {
-    width: 100%;
-    height: 50px;
-    font-size: 1.2em;
-    color: #fff; /* White text color */
-    background-color: #6c63ff; /* Purple background color */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition */
+input:focus {
+  outline: none;
 }
 
-/* Button hover styles */
-button[type="submit"]:hover {
-    background-color: #5247d4; /* Darker purple on hover */
+form button {
+  padding: 1rem 2rem;
+  background-color: #1a252a;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  color: #bdfa65;
+  font-size: 2rem;
+  margin-top: 6rem;
 }
 
-/* Center the paragraph tag */
-p {
+select {
+  padding: 2vw;
+  border-radius: 2vw;
+  font-size: 4vw;
+  background-color: #1a252a;
+  color: #bdfa65;
+}
+
+select:focus {
+  outline: none;
+}
+
+select option {
+  background-color: #1a252a;
+  color: #bdfa65;
+  margin-top: 10vw;
+  width: 100%;
+}
+
+section option:focus {
+  outline: none;
+}
+
+@media screen and (min-width: 1028px) {
+  body {
+    background-color: #bdfa65;
+    padding: 2vw;
+    background-image: url("../images/img.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: top left;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  h1 {
+    font-size: 6vw;
+    text-transform: uppercase;
     text-align: center;
-}
+  }
 
-/* Style for the image */
-img {
-    display: block; /* Ensure images are displayed as blocks */
-    margin: 0 auto; /* Center the images horizontally */
-}
+  .container {
+    width: 60%;
+    padding: 1vw;
+  }
+  .container form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .box {
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1vw;
+  }
+  label {
+    font-size: 1.5vw;
+    font-weight: bold;
+  }
 
-/* Style for the AQI mini image */
-#aqi_mini {
-    max-width: 200px; /* Set maximum width for the image */
-    height: auto; /* Maintain aspect ratio */
-}
+  .input-box {
+    background-color: white;
+    width: 100%;
+    gap: 1rem;
+    padding: 3vw;
+    border-radius: 1vw;
+    display: grid;
+    grid-template-columns: 0fr 1fr;
+  }
 
-/* Style for the graph image */
-#graph_image {
-    display: block; /* Ensure the image is displayed as a block */
-    margin: 20px auto; /* Center the image horizontally and add space */
-    max-width: 100%; /* Set maximum width to fill the container */
-    height: auto; /* Maintain aspect ratio */
-}
+  input {
+    width: 100%;
+    border-radius: 0.5vw;
+    border: 1px solid #1a252a;
+    font-size: 1vw;
+    padding: 0.5vw;
+    font-weight: bold;
+  }
 
+  input:focus {
+    outline: none;
+  }
+
+  select {
+    padding: 1vw;
+    border-radius: 1vw;
+    font-size: 1vw;
+    background-color: #1a252a;
+    color: #bdfa65;
+  }
+
+  select:focus {
+    outline: none;
+  }
+
+  select option {
+    background-color: #1a252a;
+    color: #bdfa65;
+    width: 100%;
+  }
+
+  section option:focus {
+    outline: none;
+  }
+
+  .button {
+    width: 200%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .button button {
+    padding: 1rem 2rem;
+    background-color: #1a252a;
+    border: none;
+    border-radius: 2vw;
+    cursor: pointer;
+    color: #bdfa65;
+    font-size: 4rem;
+    margin-top: 6rem;
+  }
+}
