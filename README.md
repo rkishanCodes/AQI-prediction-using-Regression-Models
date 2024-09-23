@@ -71,4 +71,4 @@ A Flask-based web application is included for easy AQI prediction:
 2. Install required dependencies: `pip install -r requirements.txt`
 3. Run the Flask application: `python app.py`
 4. Access the web interface at `http://localhost:5000`
-5. 
+
