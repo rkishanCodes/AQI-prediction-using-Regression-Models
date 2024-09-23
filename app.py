@@ -2,10 +2,10 @@ import os
 from flask import Flask, render_template, request
 import pickle
 import numpy as np
+from flask_apscheduler import APScheduler
 
 app = Flask(__name__)
 
-# Define the base directory based on the current file's location
 base_dir = os.path.dirname(os.path.abspath(__file__))
 models_dir = os.path.join(base_dir, 'models')
 
@@ -32,9 +32,24 @@ for model_name, model_path in model_paths.items():
 
 print(f"Available models: {list(models.keys())}")
 
+def ping_server():
+    with app.test_request_context():
+        print("Pinging server...")
+        try:
+            response = app.test_client().get('/ping')
+            print(f"Ping response: {response.data.decode()}")
+        except Exception as e:
+            print(f"Error pinging server: {e}")
+
+scheduler = APScheduler()
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/ping')
+def ping():
+    return "Server is alive", 200
 
 @app.route('/predict_aqi', methods=['POST'])
 def predict_aqi():
@@ -42,7 +57,6 @@ def predict_aqi():
     if not model_name:
         return "Error: Model not specified", 400
 
-    # Extract and validate input data
     try:
         pm25 = float(request.form['pm25'])
         pm10 = float(request.form['pm10'])
@@ -67,4 +81,6 @@ def predict_aqi():
     return render_template('result.html', predicted_aqi=predicted_aqi[0])
 
 if __name__ == '__main__':
+    scheduler.add_job(id='Keep Alive', func=ping_server, trigger='interval', seconds=300)  
+    scheduler.start()
     app.run(debug=True)
