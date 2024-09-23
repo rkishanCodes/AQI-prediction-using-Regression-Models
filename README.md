@@ -72,3 +72,6 @@ A Flask-based web application is included for easy AQI prediction:
 3. Run the Flask application: `python app.py`
 4. Access the web interface at `http://localhost:5000`
 
+## Live Demo
+Check out the live version of the project here: [AQI Prediction Project](https://aqi-prediction-using-regression-models.onrender.com)
+
