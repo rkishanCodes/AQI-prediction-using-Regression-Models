@@ -3,8 +3,10 @@ from flask import Flask, render_template, request
 import pickle
 import numpy as np
 from flask_apscheduler import APScheduler
+from flask_cors import CORS  # Import CORS
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 models_dir = os.path.join(base_dir, 'models')
